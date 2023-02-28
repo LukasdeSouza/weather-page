@@ -1,20 +1,25 @@
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
-import { IconButton } from '@mui/material'
+import { IconButton, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
+import { brazilStates } from '@/utils/constants';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [cityName, setCityName] = useState('')
-  const [state, setState] = useState('')
+  const [cityName, setCityName] = useState<string>('')
+  const [state, setState] = useState<string>('')
+
+  const [weatherInfo, setWeatherInfo] = useState()
 
   const searchForWeather = () => {
     fetch(`https://api.hgbrasil.com/weather?key=SUA-CHAVE&city_name=${cityName},${state}`)
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => setWeatherInfo(data))
+
+    console.log(weatherInfo)
   }
 
 
@@ -27,17 +32,35 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <section>
-        <input type="text" placeholder='Cidade' value={cityName}
-          onChange={(e: React.FormEvent<HTMLInputElement>) => setCityName(e.currentTarget.value)}
+        <TextField type="text"
+          size='small'
+          label='Cidade'
+          value={cityName}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCityName(e.currentTarget.value)}
         />
-        <input type="" placeholder='Estado' value={state}
-          onChange={((e: React.FormEvent<HTMLInputElement>) => setState(e.currentTarget.value))}
-        />
-        <Button onClick={searchForWeather}>
+        <Select
+          size='small'
+          label='Estados'
+          onChange={(event: SelectChangeEvent) => setState(event.target.value)}
+          sx={{ width: '180px' }}
+        >
+          {brazilStates.map((state) => (
+            <MenuItem
+              value={state.value}
+              key={state.key}
+            >
+              {state.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button
+          variant='contained'
+          onClick={searchForWeather}>
           Buscar
         </Button>
-      </section>
 
+        {JSON.stringify(weatherInfo) ?? <h2>Informe a cidade e estado para buscarmos o clima</h2>}
+      </section>
     </>
   )
 }
