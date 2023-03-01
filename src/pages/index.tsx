@@ -49,9 +49,42 @@ export default function Home() {
         onChangeState={onChangeState}
         searchForWeather={searchForWeather}
       >
-        <Typography variant='h5'>Funcionou o Children</Typography>
+
       </WeatherBox>
-      {JSON.stringify(weatherInfo) ?? <h2>Informe a cidade e estado para buscarmos o clima</h2>}
+      <Typography variant='body1'>
+        {weatherInfo?.results.city}
+      </Typography>
+
+      <Typography variant='body2'>
+        {weatherInfo?.results.description}
+      </Typography>
+
+      <Typography variant='body2'>
+        {`${weatherInfo?.results.humidity}%`}
+      </Typography>
+
+      <Typography variant='body2'>
+        {`${weatherInfo?.results.temp}º Graus`}
+      </Typography>
+
+      <Typography variant='body2'>
+        {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
+      </Typography>
+
+
+      {/* <Typography variant='body2'>
+        {weatherInfo?.results.forecast[0].date}
+      </Typography>
+      <Typography>
+        {weatherInfo?.results.forescast?.[0].weekday}
+      </Typography>
+      <Typography variant='body2'>
+        {`Máxima:${weatherInfo?.results.forescast[0].max} - Mínima:${weatherInfo?.results.forescast[0].min}`}
+      </Typography>
+      <Typography variant='body2'>
+        {`${weatherInfo?.results.forescast[0].description} - Possibilidade de Chuva:${weatherInfo?.results.forescast[0].rain_probability}`}
+      </Typography> */}
+
     </Box>
   )
 }
