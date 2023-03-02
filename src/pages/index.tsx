@@ -2,13 +2,12 @@ import React from 'react'
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import { useState } from 'react'
-import { Box, Typography, IconButton, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
-import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
-import { brazilStates } from '@/utils/constants';
+import { Box, Typography, SelectChangeEvent } from '@mui/material'
 import SearchBar from '@/components/searchbar';
 import HomeStyles from '../styles/Home.module.css'
 import WeatherBox from '@/components/box'
+import { WiStrongWind, WiThermometer, WiHumidity } from "react-icons/wi";
+import Stack from '@mui/material/Stack'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +16,7 @@ export default function Home() {
   const [state, setState] = useState<string>('')
 
   const [weatherInfo, setWeatherInfo] = useState()
+  const [showInfo, setShowInfo] = useState(false)
 
   const onChangeCity = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCityName(e.currentTarget.value)
@@ -30,6 +30,7 @@ export default function Home() {
     fetch(`https://api.hgbrasil.com/weather?key=SUA-CHAVE&city_name=${cityName},${state}`)
       .then((response) => response.json())
       .then((data) => setWeatherInfo(data))
+      .finally(() => setShowInfo(true))
 
     console.log(weatherInfo)
   }
@@ -49,29 +50,31 @@ export default function Home() {
         onChangeState={onChangeState}
         searchForWeather={searchForWeather}
       >
-
       </WeatherBox>
-      <Typography variant='body1'>
-        {weatherInfo?.results.city}
-      </Typography>
+      {showInfo &&
+        <Stack sx={{ my: 2 }}>
+          <Typography variant='h6'>
+            {weatherInfo?.results.city}
+          </Typography>
 
-      <Typography variant='body2'>
-        {weatherInfo?.results.description}
-      </Typography>
+          <Typography variant='caption'>
+            {weatherInfo?.results.description}
+          </Typography>
 
-      <Typography variant='body2'>
-        {`${weatherInfo?.results.humidity}%`}
-      </Typography>
+          <Typography variant='body1'>
+            <WiHumidity size={24} color='blue' /> {`Humidade: ${weatherInfo?.results.humidity}%`}
+          </Typography>
 
-      <Typography variant='body2'>
-        {`${weatherInfo?.results.temp}º Graus`}
-      </Typography>
+          <Typography variant='body1'>
+            <WiThermometer size={24} color='red' /> {`Temperatura: ${weatherInfo?.results.temp}º Graus`}
+          </Typography>
 
-      <Typography variant='body2'>
-        {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
-      </Typography>
+          <Typography variant='body1'>
+            <WiStrongWind size={24} color='grey' /> {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
+          </Typography>
+        </Stack>
 
-
+      }
       {/* <Typography variant='body2'>
         {weatherInfo?.results.forecast[0].date}
       </Typography>
