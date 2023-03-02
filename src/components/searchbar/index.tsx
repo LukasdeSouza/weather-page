@@ -29,6 +29,7 @@ const SearchBar = ({ cityName, onChangeCity, onChangeState, searchForWeather }) 
       </Select>
       <Button
         variant='contained'
+        color='warning'
         onClick={searchForWeather}>
         Buscar
       </Button>

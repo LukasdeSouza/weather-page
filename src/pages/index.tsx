@@ -6,7 +6,7 @@ import { Box, Typography, SelectChangeEvent } from '@mui/material'
 import SearchBar from '@/components/searchbar';
 import HomeStyles from '../styles/Home.module.css'
 import WeatherBox from '@/components/box'
-import { WiStrongWind, WiThermometer, WiHumidity } from "react-icons/wi";
+import { WiStrongWind, WiThermometer, WiHumidity, WiHorizonAlt, WiHorizon } from "react-icons/wi";
 import Stack from '@mui/material/Stack'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -72,6 +72,15 @@ export default function Home() {
           <Typography variant='body1'>
             <WiStrongWind size={24} color='grey' /> {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
           </Typography>
+
+          <Typography variant='caption'>
+            <WiHorizonAlt size={24} color='yellow' /> {`Nascer do Sol:${weatherInfo?.results.sunrise}`}
+          </Typography>
+
+          <Typography variant='caption'>
+            <WiHorizon size={24} color='orange' /> {`Pôr do Sol:${weatherInfo?.results.sunset}`}
+          </Typography>
+
         </Stack>
 
       }
