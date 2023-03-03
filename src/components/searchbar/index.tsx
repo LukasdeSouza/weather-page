@@ -1,11 +1,12 @@
 import React from 'react'
 import { brazilStates } from '@/utils/constants'
 import { Button, Input, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material'
+import SearchBarStyles from '../../styles/SearchBar.module.css'
 
 
 const SearchBar = ({ cityName, onChangeCity, onChangeState, searchForWeather }) => {
   return (
-    <section>
+    <section className={SearchBarStyles.main}>
       <TextField type="text"
         size='small'
         label='Cidade'
@@ -29,8 +30,8 @@ const SearchBar = ({ cityName, onChangeCity, onChangeState, searchForWeather }) 
       </Select>
       <Button
         variant='contained'
-        color='warning'
-        onClick={searchForWeather}>
+        onClick={searchForWeather}
+        sx={{ mx: 1, backgroundColor: '#94ceff', color: "#555", fontWeight: 600 }}>
         Buscar
       </Button>
 

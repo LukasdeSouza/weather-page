@@ -7,7 +7,9 @@ import SearchBar from '@/components/searchbar';
 import HomeStyles from '../styles/Home.module.css'
 import WeatherBox from '@/components/box'
 import { WiStrongWind, WiThermometer, WiHumidity, WiHorizonAlt, WiHorizon } from "react-icons/wi";
+import ClimaVentoso from '../../assets/clima-ventoso.png'
 import Stack from '@mui/material/Stack'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,58 +46,46 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Image src={ClimaVentoso} alt="" />
+      <Typography variant='h5'
+        fontWeight={600}
+        color={'#555'}
+      >Previsão do Tempo por Cidade
+      </Typography>
       <WeatherBox
         cityName={cityName}
         onChangeCity={onChangeCity}
         onChangeState={onChangeState}
         searchForWeather={searchForWeather}
       >
+        {showInfo &&
+          <Stack
+            className={HomeStyles.container}
+            sx={{ my: 2 }}>
+            <Typography variant='h6'>
+              {weatherInfo?.results.city}
+            </Typography>
+            <Typography variant='caption'>
+              {weatherInfo?.results.description}
+            </Typography>
+            <Typography variant='caption'>
+              <WiHumidity size={24} color='blue' /> {`Humidade: ${weatherInfo?.results.humidity}%`}
+            </Typography>
+            <Typography variant='caption'>
+              <WiThermometer size={24} color='red' /> {`Temperatura: ${weatherInfo?.results.temp}º Graus`}
+            </Typography>
+            <Typography variant='caption'>
+              <WiStrongWind size={24} color='grey' /> {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
+            </Typography>
+            <Typography variant='caption'>
+              <WiHorizonAlt size={24} color='yellow' /> {`Nascer do Sol:${weatherInfo?.results.sunrise}`}
+            </Typography>
+            <Typography variant='caption'>
+              <WiHorizon size={24} color='orange' /> {`Pôr do Sol:${weatherInfo?.results.sunset}`}
+            </Typography>
+          </Stack>
+        }
       </WeatherBox>
-      {showInfo &&
-        <Stack sx={{ my: 2 }}>
-          <Typography variant='h6'>
-            {weatherInfo?.results.city}
-          </Typography>
-
-          <Typography variant='caption'>
-            {weatherInfo?.results.description}
-          </Typography>
-
-          <Typography variant='body1'>
-            <WiHumidity size={24} color='blue' /> {`Humidade: ${weatherInfo?.results.humidity}%`}
-          </Typography>
-
-          <Typography variant='body1'>
-            <WiThermometer size={24} color='red' /> {`Temperatura: ${weatherInfo?.results.temp}º Graus`}
-          </Typography>
-
-          <Typography variant='body1'>
-            <WiStrongWind size={24} color='grey' /> {`Velocidade do Vento:${weatherInfo?.results.wind_speedy}`}
-          </Typography>
-
-          <Typography variant='caption'>
-            <WiHorizonAlt size={24} color='yellow' /> {`Nascer do Sol:${weatherInfo?.results.sunrise}`}
-          </Typography>
-
-          <Typography variant='caption'>
-            <WiHorizon size={24} color='orange' /> {`Pôr do Sol:${weatherInfo?.results.sunset}`}
-          </Typography>
-
-        </Stack>
-
-      }
-      {/* <Typography variant='body2'>
-        {weatherInfo?.results.forecast[0].date}
-      </Typography>
-      <Typography>
-        {weatherInfo?.results.forescast?.[0].weekday}
-      </Typography>
-      <Typography variant='body2'>
-        {`Máxima:${weatherInfo?.results.forescast[0].max} - Mínima:${weatherInfo?.results.forescast[0].min}`}
-      </Typography>
-      <Typography variant='body2'>
-        {`${weatherInfo?.results.forescast[0].description} - Possibilidade de Chuva:${weatherInfo?.results.forescast[0].rain_probability}`}
-      </Typography> */}
 
     </Box>
   )
