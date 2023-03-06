@@ -31,7 +31,7 @@ const SearchBar = ({ cityName, onChangeCity, onChangeState, searchForWeather }) 
       <Button
         variant='contained'
         onClick={searchForWeather}
-        sx={{ mx: 1, backgroundColor: '#94ceff', color: "#555", fontWeight: 600 }}>
+        sx={{ mx: 1, backgroundColor: '#94ceff', color: "#ffff", fontWeight: 600 }}>
         Buscar
       </Button>
 
